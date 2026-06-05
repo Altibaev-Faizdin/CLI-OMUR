@@ -1,0 +1,11 @@
+include:
+  - project: "devops/geeks-ops"
+    ref: master
+    file: "/staging-gitlab-ci.yml"
+
+variables:
+  DOCKERFILE_PATH: ".devops/Dockerfile"
+  HELM_RELEASE_NAME: "backend"
+  NAMESPACE: "yldam"
+  HELM_CHART_PATH: ".devops/helm"
+  TIMEOUT: "5m0s"

@@ -1,0 +1,37 @@
+[project]
+name = "yldam-langing-backend"
+version = "0.1.0"
+description = "Backend for Yldam landing page"
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "Django==4.2",
+    "djangorestframework==3.15.2",
+    "django-jazzmin==2.6.0",
+    "pillow==11.1.0",
+    "django-cors-headers==4.6.0",
+    "python-dotenv==1.1.1",
+    "django-modeltranslation==0.19.12",
+    "drf-yasg==1.21.8",
+    "django-redis==6.0.0",
+    "gunicorn==23.0.0",
+    "whitenoise==6.9.0",
+    "psycopg2-binary==2.9.10",
+]
+
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+target-version = "py313"
+exclude = ["core", ".venv", "node_modules"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "C", "B", "A"]
+ignore = ["E501", "I001"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-first-party = ["apps", "core"]
+
