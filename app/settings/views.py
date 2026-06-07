@@ -1,27 +1,17 @@
-from rest_framework import generics
+from rest_framework import mixins, viewsets
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from .models import (
-    TherapyPage,
-    CallbackRequest
-)
-
-from .serializers import (
-    TherapyPageSerializer,
-    CallbackRequestSerializer
-)
+from app.settings.models import TherapyPage
+from app.settings.serializers import TherapyPageSerializer
 
 
-class TherapyPageView(APIView):
-    def get(self, request):
+class TherapyPageViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = TherapyPageSerializer
+    queryset = TherapyPage.objects.all()
+
+    def list(self, request, *args, **kwargs):
         page = TherapyPage.objects.first()
 
-        serializer = TherapyPageSerializer(page)
+        serializer = self.get_serializer(page)
 
         return Response(serializer.data)
-
-
-class CallbackRequestCreateView(generics.CreateAPIView):
-    queryset = CallbackRequest.objects.all()
-    serializer_class = CallbackRequestSerializer

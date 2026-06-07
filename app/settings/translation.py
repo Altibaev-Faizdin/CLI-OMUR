@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import TherapyPage, PopularService, TherapyService
+from app.settings.models import TherapyPage, PopularService, TherapyService
 
 @register(TherapyPage)
 class TherapyPageTranslationOptions(TranslationOptions):
@@ -7,8 +7,8 @@ class TherapyPageTranslationOptions(TranslationOptions):
 
 @register(PopularService)
 class PopularServiceTranslationOptions(TranslationOptions):
-    fields = ('title', 'description')
+    fields = ('title', 'short_description')
 
 @register(TherapyService)
 class TherapyServiceTranslationOptions(TranslationOptions):
-    fields = ('title', 'description')
+    fields = ('title', )

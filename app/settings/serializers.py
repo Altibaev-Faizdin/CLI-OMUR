@@ -1,22 +1,28 @@
 from rest_framework import serializers
-from .models import (
+from app.settings.models import (
     TherapyPage,
     PopularService,
     TherapyService,
-    CallbackRequest
 )
 
 
 class PopularServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PopularService
-        fields = "__all__"
+        fields = (
+            "title",
+            "short_description",
+            "order"
+        )
 
 
 class TherapyServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = TherapyService
-        fields = "__all__"
+        fields = (
+            "title",
+            "order"
+        )
 
 
 class TherapyPageSerializer(serializers.ModelSerializer):
@@ -45,7 +51,3 @@ class TherapyPageSerializer(serializers.ModelSerializer):
             many=True
         ).data
 
-class CallbackRequestSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CallbackRequest
-        fields = ("phone",)

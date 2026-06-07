@@ -1,14 +1,27 @@
 from django.contrib import admin
+from modeltranslation.admin import TabbedTranslationAdmin
 
-from .models import (
+from app.settings.models import (
     TherapyPage,
     PopularService,
     TherapyService,
-    CallbackRequest
 )
 
+from app.settings import translation
 
-admin.site.register(TherapyPage)
-admin.site.register(PopularService)
-admin.site.register(TherapyService)
-admin.site.register(CallbackRequest)
+@admin.register(TherapyPage)
+class TherapyPageAdmin(TabbedTranslationAdmin):
+    list_display = ('id', 'title', 'description', 'banner_image')
+    search_fields = ('id', 'title')
+
+
+@admin.register(PopularService)
+class PopularServiceAdmin(TabbedTranslationAdmin):
+    list_display = ('id', 'title', 'short_description', 'order')
+    search_fields = ('title',)
+
+
+@admin.register(TherapyService)
+class TherapyServiceAdmin(TabbedTranslationAdmin):
+    list_display = ('id', 'title', 'order')
+    search_fields = ('title',)
