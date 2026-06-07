@@ -14,5 +14,6 @@ urls = [
 
 ]
 urlpatterns = [
-    path("api/", include(urls))
+    path("api/", include(urls)),
+    path("api/v1/", include("app.settings.urls"))
 ]

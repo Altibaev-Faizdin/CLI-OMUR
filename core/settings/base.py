@@ -34,7 +34,7 @@ DJANGO_APPS = [
 ]
 
 MY_APPS = [
-    # "apps.settings",
+    "app.settings",
 ]
 
 LIBRARY_APPS = [
