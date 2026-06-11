@@ -1,5 +1,6 @@
 from django.contrib import admin
-from modeltranslation.admin import TabbedTranslationAdmin
+from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
+from app.settings import translation
 
 from app.settings.models import (
     TherapyPage,
@@ -11,9 +12,14 @@ from app.settings.models import (
     PreparationArticle,
     PreparationArticleImage,
     FAQ,
+    ServiceCategory,
+    Service,
+    Specialist
 )
 
-from app.settings import translation
+class ServiceInline(TranslationTabularInline):
+    model = Service
+    extra = 0
 
 class PreparationArticleImageInline(admin.TabularInline):
     model = PreparationArticleImage
@@ -61,3 +67,25 @@ class PreparationArticleAdmin(TabbedTranslationAdmin):
 class FAQAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'question', 'answer')
     search_fields = ('question',)
+
+@admin.register(ServiceCategory)
+class ServiceCategoryAdmin(TabbedTranslationAdmin):
+    list_display = ("name", "slug", "order")
+    prepopulated_fields = {"slug": ("name",)}
+    inlines = [ServiceInline]
+
+
+@admin.register(Service)
+class ServiceAdmin(TabbedTranslationAdmin):
+    list_display = ("name", "category", "is_active", "order", "created_at")
+    list_filter = ("category", "is_active")
+    list_editable = ("is_active", "order")
+    search_fields = ("name",)
+    readonly_fields = ("created_at",)
+
+
+@admin.register(Specialist)
+class SpecialistAdmin(TabbedTranslationAdmin):
+    list_display = ("full_name", "specialization", "experience", "order")
+    list_editable = ("order",)
+    search_fields = ("full_name", "specialization")

@@ -9,6 +9,9 @@ from app.settings.models import (
     PreparationArticle,
     PreparationArticleImage,
     FAQ,
+    ServiceCategory,
+    Service,
+    Specialist
 )
 from app.settings.serializers import (
     TherapyPageSerializer,
@@ -18,6 +21,9 @@ from app.settings.serializers import (
     PreparationArticleSerializer,
     PreparationArticleImageSerializer,
     FAQSerializer,
+    ServiceCategorySerializer, 
+    ServiceSerializer, 
+    SpecialistSerializer
 )
 
 
@@ -56,3 +62,18 @@ class PreparationArticleViewSet(viewsets.ModelViewSet):
 class FAQViewSet(viewsets.ModelViewSet):
     queryset = FAQ.objects.all()
     serializer_class = FAQSerializer
+
+
+class ServiceCategoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = ServiceCategorySerializer
+    queryset = ServiceCategory.objects.all().prefetch_related("services")
+
+
+class ServiceViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+
+
+class SpecialistViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Specialist.objects.all()
+    serializer_class = SpecialistSerializer

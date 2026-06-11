@@ -4,3 +4,6 @@ class SettingsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'app.settings'
     verbose_name = "Терапия"
+
+    def ready(self):
+        import app.settings.translation

@@ -8,7 +8,10 @@ from app.settings.models import (
     RecommendedSpecialist,
     PreparationArticle,
     PreparationArticleImage,
-    FAQ
+    FAQ,
+    ServiceCategory,
+    Service,
+    Specialist
 )
 
 @register(TherapyPage)
@@ -42,3 +45,16 @@ class PreparationArticleTranslationOptions(TranslationOptions):
 @register(FAQ)
 class FAQTranslationOptions(TranslationOptions):
     fields = ('question', 'answer')
+
+@register(ServiceCategory)
+class ServiceCategoryTranslationOptions(TranslationOptions):
+    fields = ("name",)
+
+
+@register(Service)
+class ServiceTranslationOptions(TranslationOptions):
+    fields = ("name", "description")
+
+@register(Specialist)
+class SpecialistTranslationOptions(TranslationOptions):
+    fields = ("full_name", "specialization")
