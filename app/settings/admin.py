@@ -14,7 +14,10 @@ from app.settings.models import (
     FAQ,
     ServiceCategory,
     Service,
-    Specialist
+    Specialist,
+    ClinicLeader,
+    AboutClinic,
+    WhyUs,
 )
 
 class ServiceInline(TranslationTabularInline):
@@ -89,3 +92,21 @@ class SpecialistAdmin(TabbedTranslationAdmin):
     list_display = ("full_name", "specialization", "experience", "order")
     list_editable = ("order",)
     search_fields = ("full_name", "specialization")
+
+
+@admin.register(ClinicLeader)
+class ClinicLeaderAdmin(TabbedTranslationAdmin):
+    list_display = ("full_name", "position")
+    search_fields = ("full_name",)
+
+
+@admin.register(AboutClinic)
+class AboutClinicAdmin(TabbedTranslationAdmin):
+    list_display = ("id", "history", "mission", "values")
+
+
+@admin.register(WhyUs)
+class WhyUsAdmin(TabbedTranslationAdmin):
+    list_display = ("title", "description", "order")
+    list_editable = ("order",)
+    search_fields = ("title",)

@@ -14,6 +14,9 @@ from app.settings.models import (
     ServiceCategory,
     Service,
     Specialist,
+    ClinicLeader,
+    AboutClinic,
+    WhyUs,
 )
 
 class PatientTipSerializer(serializers.ModelSerializer):
@@ -129,3 +132,23 @@ class SpecialistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialist
         fields = ("id", "full_name", "specialization", "experience", "photo", "order")
+
+
+
+
+class ClinicLeaderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClinicLeader
+        fields = ("id", "full_name", "position", "description", "photo")
+
+
+class AboutClinicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutClinic
+        fields = ("id", "history", "mission", "values")
+
+
+class WhyUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WhyUs
+        fields = ("id", "icon", "title", "description", "order")

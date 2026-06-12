@@ -183,3 +183,51 @@ class Specialist(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+
+
+
+class ClinicLeader(models.Model):
+    full_name = models.CharField(max_length=255, verbose_name="ФИО")
+    position = models.CharField(max_length=255, verbose_name="Должность")
+    description = models.TextField(verbose_name="Описание")
+    photo = models.ImageField(upload_to="about/leader/", blank=True, null=True, verbose_name="Фото")
+
+    class Meta:
+        verbose_name = "Руководитель клиники"
+        verbose_name_plural = "Руководитель клиники"
+
+    def __str__(self):
+        return self.full_name
+
+
+
+
+class AboutClinic(models.Model):
+    history = models.TextField(verbose_name="История")
+    mission = models.TextField(verbose_name="Миссия")
+    values = models.TextField(verbose_name="Ценности")
+
+    class Meta:
+        verbose_name = "О клинике"
+        verbose_name_plural = "О клинике"
+
+    def __str__(self):
+        return "О клинике"
+
+
+
+class WhyUs(models.Model):
+    icon = models.ImageField(upload_to="about/why_us/", blank=True, null=True, verbose_name="Иконка")
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    description = models.CharField(max_length=500, verbose_name="Описание")
+    order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
+
+    class Meta:
+        verbose_name = "Почему выбирают нас"
+        verbose_name_plural = "Почему выбирают нас"
+        ordering = ["order"]
+
+    def __str__(self):
+        return self.title

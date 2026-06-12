@@ -11,7 +11,10 @@ from app.settings.models import (
     FAQ,
     ServiceCategory,
     Service,
-    Specialist
+    Specialist,
+    ClinicLeader,
+    AboutClinic,
+    WhyUs,
 )
 
 @register(TherapyPage)
@@ -58,3 +61,17 @@ class ServiceTranslationOptions(TranslationOptions):
 @register(Specialist)
 class SpecialistTranslationOptions(TranslationOptions):
     fields = ("full_name", "specialization")
+
+@register(ClinicLeader)
+class ClinicLeaderTranslationOptions(TranslationOptions):
+    fields = ("full_name", "position", "description")
+
+
+@register(AboutClinic)
+class AboutClinicTranslationOptions(TranslationOptions):
+    fields = ("history", "mission", "values")
+
+
+@register(WhyUs)
+class WhyUsTranslationOptions(TranslationOptions):
+    fields = ("title", "description")

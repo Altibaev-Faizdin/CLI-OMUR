@@ -10,7 +10,10 @@ from app.settings.views import (
     FAQViewSet,
     ServiceCategoryViewSet,
     ServiceViewSet,
-    SpecialistViewSet
+    SpecialistViewSet,
+    ClinicLeaderViewSet,
+    AboutClinicViewSet,
+    WhyUsViewSet,
 )
 
 router = DefaultRouter()
@@ -23,6 +26,9 @@ router.register("faqs", FAQViewSet, basename="faqs")
 router.register("services", ServiceCategoryViewSet, basename="service-category")
 router.register("services-detail", ServiceViewSet, basename="service")
 router.register("specialists", SpecialistViewSet, basename="specialist")
+router.register("clinic-leader", ClinicLeaderViewSet, basename="clinic-leader")
+router.register("about-clinic", AboutClinicViewSet, basename="about-clinic")
+router.register("why-us", WhyUsViewSet, basename="why-us")
 
 
 urlpatterns = router.urls

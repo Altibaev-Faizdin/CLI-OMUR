@@ -11,7 +11,10 @@ from app.settings.models import (
     FAQ,
     ServiceCategory,
     Service,
-    Specialist
+    Specialist,
+    ClinicLeader,
+    AboutClinic,
+    WhyUs,
 )
 from app.settings.serializers import (
     TherapyPageSerializer,
@@ -23,7 +26,10 @@ from app.settings.serializers import (
     FAQSerializer,
     ServiceCategorySerializer, 
     ServiceSerializer, 
-    SpecialistSerializer
+    SpecialistSerializer,
+    ClinicLeaderSerializer,
+    AboutClinicSerializer,
+    WhyUsSerializer,
 )
 
 
@@ -77,3 +83,18 @@ class ServiceViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 class SpecialistViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Specialist.objects.all()
     serializer_class = SpecialistSerializer
+
+
+class ClinicLeaderViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = ClinicLeader.objects.all()
+    serializer_class = ClinicLeaderSerializer
+
+
+class AboutClinicViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = AboutClinic.objects.all()
+    serializer_class = AboutClinicSerializer
+
+
+class WhyUsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = WhyUs.objects.all()
+    serializer_class = WhyUsSerializer
