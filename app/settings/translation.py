@@ -15,6 +15,8 @@ from app.settings.models import (
     ClinicLeader,
     AboutClinic,
     WhyUs,
+    ClinicHistory,
+    Event,
 )
 
 @register(TherapyPage)
@@ -69,7 +71,17 @@ class ClinicLeaderTranslationOptions(TranslationOptions):
 
 @register(AboutClinic)
 class AboutClinicTranslationOptions(TranslationOptions):
-    fields = ("history", "mission", "values")
+    fields = ("mission", "values")
+
+
+@register(ClinicHistory)
+class ClinicHistoryTranslationOptions(TranslationOptions):
+    fields = ("title", "description")
+
+
+@register(Event)
+class EventTranslationOptions(TranslationOptions):
+    fields = ("title", "description")
 
 
 @register(WhyUs)

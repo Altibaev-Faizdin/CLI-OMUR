@@ -7,6 +7,7 @@ from app.settings.models import (
     PopularService,
     TherapyService,
     PatientTip,
+    PatientTipImage,
     VideoMaterial,
     RecommendedSpecialist,
     PreparationArticle,
@@ -17,6 +18,11 @@ from app.settings.models import (
     Specialist,
     ClinicLeader,
     AboutClinic,
+    AboutClinicImage,
+    ClinicHistory,
+    ClinicHistoryImage,
+    Event,
+    EventImage,
     WhyUs,
 )
 
@@ -73,7 +79,8 @@ class FAQAdmin(TabbedTranslationAdmin):
 
 @admin.register(ServiceCategory)
 class ServiceCategoryAdmin(TabbedTranslationAdmin):
-    list_display = ("name", "slug", "order")
+    list_display = ("name", "slug", "service_type", "order")
+    list_filter = ("service_type",)
     prepopulated_fields = {"slug": ("name",)}
     inlines = [ServiceInline]
 
@@ -89,7 +96,8 @@ class ServiceAdmin(TabbedTranslationAdmin):
 
 @admin.register(Specialist)
 class SpecialistAdmin(TabbedTranslationAdmin):
-    list_display = ("full_name", "specialization", "experience", "order")
+    list_display = ("full_name", "specialization", "specialist_type", "experience", "order")
+    list_filter = ("specialist_type",)
     list_editable = ("order",)
     search_fields = ("full_name", "specialization")
 
@@ -102,7 +110,24 @@ class ClinicLeaderAdmin(TabbedTranslationAdmin):
 
 @admin.register(AboutClinic)
 class AboutClinicAdmin(TabbedTranslationAdmin):
-    list_display = ("id", "history", "mission", "values")
+    list_display = ("id", "mission", "values")
+    inlines = [AboutClinicImageInline]
+
+
+@admin.register(ClinicHistory)
+class ClinicHistoryAdmin(TabbedTranslationAdmin):
+    list_display = ("title", "order")
+    list_editable = ("order",)
+    search_fields = ("title",)
+    inlines = [ClinicHistoryImageInline]
+
+
+@admin.register(Event)
+class EventAdmin(TabbedTranslationAdmin):
+    list_display = ("title", "order")
+    list_editable = ("order",)
+    search_fields = ("title",)
+    inlines = [EventImageInline]
 
 
 @admin.register(WhyUs)

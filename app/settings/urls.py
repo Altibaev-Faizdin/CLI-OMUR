@@ -14,6 +14,8 @@ from app.settings.views import (
     ClinicLeaderViewSet,
     AboutClinicViewSet,
     WhyUsViewSet,
+    ClinicHistoryViewSet,
+    EventViewSet,
 )
 
 router = DefaultRouter()
@@ -28,6 +30,8 @@ router.register("services-detail", ServiceViewSet, basename="service")
 router.register("specialists", SpecialistViewSet, basename="specialist")
 router.register("clinic-leader", ClinicLeaderViewSet, basename="clinic-leader")
 router.register("about-clinic", AboutClinicViewSet, basename="about-clinic")
+router.register("clinic-history", ClinicHistoryViewSet, basename="clinic-history")
+router.register("events", EventViewSet, basename="event")
 router.register("why-us", WhyUsViewSet, basename="why-us")
 
 

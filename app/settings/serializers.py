@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from app.settings.models import (
+    EventImage,
     TherapyPage,
     PopularService,
     TherapyService,
@@ -16,8 +17,15 @@ from app.settings.models import (
     Specialist,
     ClinicLeader,
     AboutClinic,
+    ClinicHistory,
+    Event,
     WhyUs,
+    AboutClinicImage,
+    ClinicHistoryImage,
+    EventImage
+    
 )
+
 
 class PatientTipSerializer(serializers.ModelSerializer):
     class Meta:
@@ -121,7 +129,7 @@ class ServiceCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServiceCategory
-        fields = ("id", "name", "slug", "services")
+        fields = ("id", "name", "slug", "service_type", "services")
 
     def get_services(self, obj):
         active = obj.services.filter(is_active=True)
@@ -131,7 +139,16 @@ class ServiceCategorySerializer(serializers.ModelSerializer):
 class SpecialistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialist
-        fields = ("id", "full_name", "specialization", "experience", "photo", "order")
+        fields = (
+            "id",
+            "full_name",
+            "specialization",
+            "specialist_type",
+            "experience",
+            "description",
+            "photo",
+            "order",
+        )
 
 
 
@@ -142,10 +159,46 @@ class ClinicLeaderSerializer(serializers.ModelSerializer):
         fields = ("id", "full_name", "position", "description", "photo")
 
 
+class AboutClinicImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutClinicImage
+        fields = ("id", "image", "sort_order")
+
+
 class AboutClinicSerializer(serializers.ModelSerializer):
+    images = AboutClinicImageSerializer(many=True, read_only=True)
+
     class Meta:
         model = AboutClinic
-        fields = ("id", "history", "mission", "values")
+        fields = ("id", "mission", "values", "images")
+
+
+class ClinicHistoryImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClinicHistoryImage
+        fields = ("id", "image", "sort_order")
+
+
+class ClinicHistorySerializer(serializers.ModelSerializer):
+    images = ClinicHistoryImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = ClinicHistory
+        fields = ("id", "title", "description", "order", "images")
+
+
+class EventImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventImage
+        fields = ("id", "image", "sort_order")
+
+
+class EventSerializer(serializers.ModelSerializer):
+    images = EventImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Event
+        fields = ("id", "title", "description", "order", "images")
 
 
 class WhyUsSerializer(serializers.ModelSerializer):

@@ -1,4 +1,5 @@
 from django.db import models
+from app.settings.enum import ServiceType, SpecialistType
 
 
 class TherapyPage(models.Model):
@@ -129,9 +130,16 @@ class FAQ(BaseModel):
         verbose_name_plural = 'Часто задаваемые вопросы'
 
 
+
+
 class ServiceCategory(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название")
     slug = models.SlugField(unique=True, verbose_name="URL-имя")
+    service_type = models.CharField(
+        max_length=50,
+        choices=ServiceType.choices,
+        verbose_name="Тип услуги",
+    )
     order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
 
     class Meta:
@@ -172,7 +180,13 @@ class Service(models.Model):
 class Specialist(models.Model):
     full_name = models.CharField(max_length=255, verbose_name="ФИО")
     specialization = models.CharField(max_length=255, verbose_name="Специализация")
+    specialist_type = models.CharField(
+        max_length=50,
+        choices=SpecialistType.choices,
+        verbose_name="Тип специалиста",
+    )
     experience = models.CharField(max_length=255, verbose_name="Стаж")
+    description = models.TextField(blank=True, verbose_name="Описание")
     photo = models.ImageField(upload_to="specialists/", verbose_name="Фото")
     order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
 
@@ -205,7 +219,6 @@ class ClinicLeader(models.Model):
 
 
 class AboutClinic(models.Model):
-    history = models.TextField(verbose_name="История")
     mission = models.TextField(verbose_name="Миссия")
     values = models.TextField(verbose_name="Ценности")
 
@@ -215,6 +228,82 @@ class AboutClinic(models.Model):
 
     def __str__(self):
         return "О клинике"
+
+
+class AboutClinicImage(models.Model):
+    about_clinic = models.ForeignKey(
+        AboutClinic,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="О клинике",
+    )
+    image = models.ImageField(upload_to="about/clinic/", verbose_name="Изображение")
+    sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
+
+    class Meta:
+        verbose_name = "Фото о клинике"
+        verbose_name_plural = "Фото о клинике"
+        ordering = ["sort_order", "id"]
+
+
+class ClinicHistory(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    description = models.TextField(verbose_name="Описание")
+    order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
+
+    class Meta:
+        verbose_name = "История"
+        verbose_name_plural = "История"
+        ordering = ["order"]
+
+    def __str__(self):
+        return self.title
+
+
+class ClinicHistoryImage(models.Model):
+    clinic_history = models.ForeignKey(
+        ClinicHistory,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="История",
+    )
+    image = models.ImageField(upload_to="about/history/", verbose_name="Изображение")
+    sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
+
+    class Meta:
+        verbose_name = "Фото истории"
+        verbose_name_plural = "Фото истории"
+        ordering = ["sort_order", "id"]
+
+
+class Event(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    description = models.TextField(verbose_name="Описание")
+    order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
+
+    class Meta:
+        verbose_name = "Мероприятие"
+        verbose_name_plural = "Мероприятия"
+        ordering = ["order"]
+
+    def __str__(self):
+        return self.title
+
+
+class EventImage(models.Model):
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="Мероприятие",
+    )
+    image = models.ImageField(upload_to="events/", verbose_name="Изображение")
+    sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
+
+    class Meta:
+        verbose_name = "Фото мероприятия"
+        verbose_name_plural = "Фото мероприятий"
+        ordering = ["sort_order", "id"]
 
 
 
