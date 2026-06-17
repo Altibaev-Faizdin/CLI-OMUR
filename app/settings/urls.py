@@ -1,6 +1,5 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-
 from app.settings.views import (
     TherapyPageViewSet,
     PatientTipViewSet,
@@ -33,6 +32,5 @@ router.register("about-clinic", AboutClinicViewSet, basename="about-clinic")
 router.register("clinic-history", ClinicHistoryViewSet, basename="clinic-history")
 router.register("events", EventViewSet, basename="event")
 router.register("why-us", WhyUsViewSet, basename="why-us")
-
 
 urlpatterns = router.urls

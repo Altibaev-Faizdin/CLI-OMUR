@@ -1,54 +1,50 @@
 from rest_framework import serializers
 from app.settings.models import (
-    EventImage,
     TherapyPage,
     PopularService,
     TherapyService,
-
     PatientTip,
     VideoMaterial,
     RecommendedSpecialist,
     PreparationArticle,
     PreparationArticleImage,
     FAQ,
-
     ServiceCategory,
     Service,
     Specialist,
     ClinicLeader,
     AboutClinic,
-    ClinicHistory,
-    Event,
-    WhyUs,
     AboutClinicImage,
+    ClinicHistory,
     ClinicHistoryImage,
-    EventImage
-    
+    Event,
+    EventImage,
+    WhyUs,
 )
 
 
 class PatientTipSerializer(serializers.ModelSerializer):
     class Meta:
         model = PatientTip
-        fields = ("title", "description", "image", "button_text", "button_url")
+        fields = ("id", "title", "description", "image", "button_text", "button_url")
 
 
 class VideoMaterialSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoMaterial
-        fields = ("title", "description", "thumbnail", "video_url")
+        fields = ("id", "title", "description", "thumbnail", "video_url")
 
 
 class RecommendedSpecialistSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecommendedSpecialist
-        fields = ("full_name", "specialty", "photo", "profile_url")
+        fields = ("id", "full_name", "specialty", "photo", "profile_url")
 
 
 class PreparationArticleImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PreparationArticleImage
-        fields = ("image", "sort_order")
+        fields = ("id", "image", "sort_order")
 
 
 class PreparationArticleSerializer(serializers.ModelSerializer):
@@ -56,33 +52,25 @@ class PreparationArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PreparationArticle
-        fields = ("title", "content", "images")
+        fields = ("id", "title", "content", "images")
 
 
 class FAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = FAQ
-        fields = ("question", "answer")
-
+        fields = ("id", "question", "answer")
 
 
 class PopularServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PopularService
-        fields = (
-            "title",
-            "short_description",
-            "order"
-        )
+        fields = ("id", "title", "short_description", "order")
 
 
 class TherapyServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = TherapyService
-        fields = (
-            "title",
-            "order"
-        )
+        fields = ("id", "title", "order")
 
 
 class TherapyPageSerializer(serializers.ModelSerializer):
@@ -91,37 +79,19 @@ class TherapyPageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TherapyPage
-        fields = (
-            "title",
-            "description",
-            "banner_image",
-            "popular_services",
-            "services",
-        )
+        fields = ("id", "title", "description", "banner_image", "popular_services", "services")
 
     def get_popular_services(self, obj):
-        return PopularServiceSerializer(
-            PopularService.objects.all(),
-            many=True
-        ).data
+        return PopularServiceSerializer(PopularService.objects.all(), many=True).data
 
     def get_services(self, obj):
-        return TherapyServiceSerializer(
-            TherapyService.objects.all(),
-            many=True
-        ).data
+        return TherapyServiceSerializer(TherapyService.objects.all(), many=True).data
 
 
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = (
-            "id",
-            "name",
-            "description",
-            "image",
-            "order",
-        )
+        fields = ("id", "name", "description", "image", "order")
 
 
 class ServiceCategorySerializer(serializers.ModelSerializer):
@@ -132,25 +102,13 @@ class ServiceCategorySerializer(serializers.ModelSerializer):
         fields = ("id", "name", "slug", "service_type", "services")
 
     def get_services(self, obj):
-        active = obj.services.filter(is_active=True)
-        return ServiceSerializer(active, many=True, context=self.context).data
-    
+        return ServiceSerializer(obj.services.all(), many=True, context=self.context).data
+
 
 class SpecialistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specialist
-        fields = (
-            "id",
-            "full_name",
-            "specialization",
-            "specialist_type",
-            "experience",
-            "description",
-            "photo",
-            "order",
-        )
-
-
+        fields = ("id", "full_name", "specialization", "specialist_type", "experience", "description", "photo", "order")
 
 
 class ClinicLeaderSerializer(serializers.ModelSerializer):

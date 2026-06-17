@@ -1,15 +1,13 @@
 from rest_framework import mixins, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from app.settings.models import ServiceType, SpecialistType
-
+from app.settings.enum import ServiceType, SpecialistType
 from app.settings.models import (
     TherapyPage,
     PatientTip,
     VideoMaterial,
     RecommendedSpecialist,
     PreparationArticle,
-    PreparationArticleImage,
     FAQ,
     ServiceCategory,
     Service,
@@ -19,7 +17,6 @@ from app.settings.models import (
     WhyUs,
     ClinicHistory,
     Event,
-
 )
 from app.settings.serializers import (
     TherapyPageSerializer,
@@ -27,16 +24,15 @@ from app.settings.serializers import (
     VideoMaterialSerializer,
     RecommendedSpecialistSerializer,
     PreparationArticleSerializer,
-    PreparationArticleImageSerializer,
     FAQSerializer,
-    ServiceCategorySerializer, 
-    ServiceSerializer, 
+    ServiceCategorySerializer,
+    ServiceSerializer,
     SpecialistSerializer,
     ClinicLeaderSerializer,
     AboutClinicSerializer,
     WhyUsSerializer,
     ClinicHistorySerializer,
-    EventSerializer
+    EventSerializer,
 )
 
 
@@ -46,11 +42,9 @@ class TherapyPageViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
     def list(self, request, *args, **kwargs):
         page = TherapyPage.objects.first()
-
         serializer = self.get_serializer(page)
-
         return Response(serializer.data)
-    
+
 
 class PatientTipViewSet(viewsets.ModelViewSet):
     queryset = PatientTip.objects.all()

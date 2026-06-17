@@ -5,11 +5,7 @@ from app.settings.enum import ServiceType, SpecialistType
 class TherapyPage(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    banner_image = models.ImageField(
-        upload_to="therapy/banner/",
-        blank=True,
-        null=True
-    )
+    banner_image = models.ImageField(upload_to="therapy/banner/", blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -37,10 +33,9 @@ class TherapyService(models.Model):
     def __str__(self):
         return self.title
 
-class BaseModel(models.Model):
-    is_active = models.BooleanField(default=True)
-    sort_order = models.PositiveIntegerField(default=0)
 
+class BaseModel(models.Model):
+    sort_order = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -59,10 +54,10 @@ class PatientTip(BaseModel):
     def __str__(self):
         return self.title
 
-
     class Meta:
         verbose_name = 'Совет для пациентов'
         verbose_name_plural = 'Советы для пациентов'
+
 
 class VideoMaterial(BaseModel):
     title = models.CharField(max_length=255)
@@ -72,7 +67,7 @@ class VideoMaterial(BaseModel):
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
         verbose_name = 'Видео материал'
         verbose_name_plural = 'Видео материалы'
@@ -86,7 +81,7 @@ class RecommendedSpecialist(BaseModel):
 
     def __str__(self):
         return self.full_name
-    
+
     class Meta:
         verbose_name = 'Рекомендуемый специалист'
         verbose_name_plural = 'Рекомендуемые специалисты'
@@ -98,18 +93,14 @@ class PreparationArticle(BaseModel):
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
         verbose_name = 'Статья для подготовки'
         verbose_name_plural = 'Статьи для подготовки'
 
 
 class PreparationArticleImage(models.Model):
-    article = models.ForeignKey(
-        PreparationArticle,
-        on_delete=models.CASCADE,
-        related_name="images"
-    )
+    article = models.ForeignKey(PreparationArticle, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to="preparation_articles/")
     sort_order = models.PositiveIntegerField(default=0)
 
@@ -124,22 +115,16 @@ class FAQ(BaseModel):
 
     def __str__(self):
         return self.question
-    
+
     class Meta:
         verbose_name = 'Часто задаваемый вопрос'
         verbose_name_plural = 'Часто задаваемые вопросы'
 
 
-
-
 class ServiceCategory(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название")
     slug = models.SlugField(unique=True, verbose_name="URL-имя")
-    service_type = models.CharField(
-        max_length=50,
-        choices=ServiceType.choices,
-        verbose_name="Тип услуги",
-    )
+    service_type = models.CharField(max_length=50, choices=ServiceType.choices, verbose_name="Тип услуги")
     order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
 
     class Meta:
@@ -152,18 +137,10 @@ class ServiceCategory(models.Model):
 
 
 class Service(models.Model):
-    category = models.ForeignKey(
-        ServiceCategory,
-        on_delete=models.CASCADE,
-        related_name="services",
-        verbose_name="Категория",
-    )
+    category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE, related_name="services", verbose_name="Категория")
     name = models.CharField(max_length=255, verbose_name="Название услуги")
     description = models.TextField(verbose_name="Описание")
-    image = models.ImageField(
-        upload_to="services/", blank=True, null=True, verbose_name="Изображение"
-    )
-    is_active = models.BooleanField(default=True, verbose_name="Активна")
+    image = models.ImageField(upload_to="services/", blank=True, null=True, verbose_name="Изображение")
     order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
@@ -176,15 +153,10 @@ class Service(models.Model):
         return self.name
 
 
-
 class Specialist(models.Model):
     full_name = models.CharField(max_length=255, verbose_name="ФИО")
     specialization = models.CharField(max_length=255, verbose_name="Специализация")
-    specialist_type = models.CharField(
-        max_length=50,
-        choices=SpecialistType.choices,
-        verbose_name="Тип специалиста",
-    )
+    specialist_type = models.CharField(max_length=50, choices=SpecialistType.choices, verbose_name="Тип специалиста")
     experience = models.CharField(max_length=255, verbose_name="Стаж")
     description = models.TextField(blank=True, verbose_name="Описание")
     photo = models.ImageField(upload_to="specialists/", verbose_name="Фото")
@@ -197,9 +169,6 @@ class Specialist(models.Model):
 
     def __str__(self):
         return self.full_name
-
-
-
 
 
 class ClinicLeader(models.Model):
@@ -216,8 +185,6 @@ class ClinicLeader(models.Model):
         return self.full_name
 
 
-
-
 class AboutClinic(models.Model):
     mission = models.TextField(verbose_name="Миссия")
     values = models.TextField(verbose_name="Ценности")
@@ -231,12 +198,7 @@ class AboutClinic(models.Model):
 
 
 class AboutClinicImage(models.Model):
-    about_clinic = models.ForeignKey(
-        AboutClinic,
-        on_delete=models.CASCADE,
-        related_name="images",
-        verbose_name="О клинике",
-    )
+    about_clinic = models.ForeignKey(AboutClinic, on_delete=models.CASCADE, related_name="images", verbose_name="О клинике")
     image = models.ImageField(upload_to="about/clinic/", verbose_name="Изображение")
     sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
 
@@ -261,12 +223,7 @@ class ClinicHistory(models.Model):
 
 
 class ClinicHistoryImage(models.Model):
-    clinic_history = models.ForeignKey(
-        ClinicHistory,
-        on_delete=models.CASCADE,
-        related_name="images",
-        verbose_name="История",
-    )
+    clinic_history = models.ForeignKey(ClinicHistory, on_delete=models.CASCADE, related_name="images", verbose_name="История")
     image = models.ImageField(upload_to="about/history/", verbose_name="Изображение")
     sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
 
@@ -291,12 +248,7 @@ class Event(models.Model):
 
 
 class EventImage(models.Model):
-    event = models.ForeignKey(
-        Event,
-        on_delete=models.CASCADE,
-        related_name="images",
-        verbose_name="Мероприятие",
-    )
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="images", verbose_name="Мероприятие")
     image = models.ImageField(upload_to="events/", verbose_name="Изображение")
     sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
 
@@ -304,7 +256,6 @@ class EventImage(models.Model):
         verbose_name = "Фото мероприятия"
         verbose_name_plural = "Фото мероприятий"
         ordering = ["sort_order", "id"]
-
 
 
 class WhyUs(models.Model):

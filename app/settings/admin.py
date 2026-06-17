@@ -1,13 +1,11 @@
 from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
 from app.settings import translation
-
 from app.settings.models import (
     TherapyPage,
     PopularService,
     TherapyService,
     PatientTip,
-    PatientTipImage,
     VideoMaterial,
     RecommendedSpecialist,
     PreparationArticle,
@@ -26,13 +24,31 @@ from app.settings.models import (
     WhyUs,
 )
 
+
 class ServiceInline(TranslationTabularInline):
     model = Service
     extra = 0
 
+
 class PreparationArticleImageInline(admin.TabularInline):
     model = PreparationArticleImage
     extra = 1
+
+
+class AboutClinicImageInline(admin.TabularInline):
+    model = AboutClinicImage
+    extra = 1
+
+
+class ClinicHistoryImageInline(admin.TabularInline):
+    model = ClinicHistoryImage
+    extra = 1
+
+
+class EventImageInline(admin.TabularInline):
+    model = EventImage
+    extra = 1
+
 
 @admin.register(TherapyPage)
 class TherapyPageAdmin(TabbedTranslationAdmin):
@@ -51,20 +67,24 @@ class TherapyServiceAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'title', 'order')
     search_fields = ('title',)
 
+
 @admin.register(PatientTip)
 class PatientTipAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'title', 'description', 'image', 'button_text', 'button_url')
     search_fields = ('title',)
+
 
 @admin.register(VideoMaterial)
 class VideoMaterialAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'title', 'description', 'thumbnail', 'video_url')
     search_fields = ('title',)
 
+
 @admin.register(RecommendedSpecialist)
 class RecommendedSpecialistAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'full_name', 'specialty', 'photo', 'profile_url')
     search_fields = ('full_name',)
+
 
 @admin.register(PreparationArticle)
 class PreparationArticleAdmin(TabbedTranslationAdmin):
@@ -72,10 +92,12 @@ class PreparationArticleAdmin(TabbedTranslationAdmin):
     search_fields = ('title',)
     inlines = [PreparationArticleImageInline]
 
+
 @admin.register(FAQ)
 class FAQAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'question', 'answer')
     search_fields = ('question',)
+
 
 @admin.register(ServiceCategory)
 class ServiceCategoryAdmin(TabbedTranslationAdmin):
@@ -87,9 +109,9 @@ class ServiceCategoryAdmin(TabbedTranslationAdmin):
 
 @admin.register(Service)
 class ServiceAdmin(TabbedTranslationAdmin):
-    list_display = ("name", "category", "is_active", "order", "created_at")
-    list_filter = ("category", "is_active")
-    list_editable = ("is_active", "order")
+    list_display = ("name", "category", "order", "created_at")
+    list_filter = ("category",)
+    list_editable = ("order",)
     search_fields = ("name",)
     readonly_fields = ("created_at",)
 
