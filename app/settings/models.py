@@ -1,5 +1,5 @@
 from django.db import models
-from app.settings.enum import ServiceType, SpecialistType
+from app.settings.enum import ServiceType
 
 
 class TherapyPage(models.Model):
@@ -156,7 +156,7 @@ class Service(models.Model):
 class Specialist(models.Model):
     full_name = models.CharField(max_length=255, verbose_name="ФИО")
     specialization = models.CharField(max_length=255, verbose_name="Специализация")
-    specialist_type = models.CharField(max_length=50, choices=SpecialistType.choices, verbose_name="Тип специалиста")
+    specialist_type = models.CharField(max_length=50, choices=ServiceType.choices, verbose_name="Тип специалиста")
     experience = models.CharField(max_length=255, verbose_name="Стаж")
     description = models.TextField(blank=True, verbose_name="Описание")
     photo = models.ImageField(upload_to="specialists/", verbose_name="Фото")

@@ -1,7 +1,7 @@
 from rest_framework import mixins, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from app.settings.enum import ServiceType, SpecialistType
+from app.settings.enum import ServiceType
 from app.settings.models import (
     TherapyPage,
     PatientTip,
@@ -108,7 +108,7 @@ class SpecialistViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewse
     @action(detail=False, methods=["get"], url_path="types")
     def types(self, request, *args, **kwargs):
         return Response(
-            [{"value": value, "label": label} for value, label in SpecialistType.choices]
+            [{"value": value, "label": label} for value, label in ServiceType.choices]
         )
 
 

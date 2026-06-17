@@ -7,10 +7,3 @@ class ServiceType(models.TextChoices):
     DIAGNOSTICS = "diagnostics", _("Диагностика")
     VACCINATION = "vaccination", _("Вакцинация")
     NEUROLOGY = "neurology", _("Неврология")
-
-
-class SpecialistType(models.TextChoices):
-    THERAPY = "therapy", _("Терапия")
-    DIAGNOSTICS = "diagnostics", _("Диагностика")
-    VACCINATION = "vaccination", _("Вакцинация")
-    NEUROLOGY = "neurology", _("Неврология")
